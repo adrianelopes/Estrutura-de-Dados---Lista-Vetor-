@@ -9,37 +9,6 @@ Lista::Lista()
     tamanho = 0;
 }
 
-void Lista::salvarLista(const std::string &arquivo)
-{
-    std::ofstream out(arquivo);
-    if (!out)
-    {
-        std::cout << "Erro ao abrir arquivo para salvar!\n";
-        return;
-    }
-    out << tamanho << "\n";
-    for (int i = 0; i < tamanho; i++)
-    {
-        out << dados[i] << " ";
-    }
-    out.close();
-}
-
-void Lista::carregarLista(const std::string &arquivo)
-{
-    std::ifstream in(arquivo);
-    if (!in)
-    {
-        return; // Se o arquivo não existir, inicia uma lista vazia
-    }
-    in >> tamanho;
-    for (int i = 0; i < tamanho; i++)
-    {
-        in >> dados[i];
-    }
-    in.close();
-}
-
 bool Lista::listaVazia()
 {
     if (tamanho == 0)
@@ -113,12 +82,8 @@ bool Lista::inserirElemento(int posicao, int valor)
             dados[i + 1] = dados[i];
         }
 
-        cout << "Valor: " << valor << " tamanho: " << tamanho << endl;
-        cout << "Posicao: " << posicao << endl;
-
         dados[posicao - 1] = valor;
         tamanho++;
-        cout << "Tamanho depois: " << tamanho << endl;
         return true;
     }
 }
@@ -149,6 +114,8 @@ void Lista::imprimirLista()
     {
         cout << "A lista está vazia." << endl;
     }
+
+    cout << "Lista: " << endl;
 
     for (int i = 0; i < tamanho; i++)
     {

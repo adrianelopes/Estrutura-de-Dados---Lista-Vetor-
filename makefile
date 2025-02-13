@@ -1,20 +1,30 @@
-CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++11
-
-SRC = main.cpp Lista.cpp
-OBJ = $(SRC:.cpp=.o)
+# Nome do executável
 EXEC = programa
 
-all: $(EXEC)
+# Compilador
+CXX = g++
 
-$(EXEC): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+# Flags de compilação
+CXXFLAGS = -Wall -Wextra -std=c++11
 
-%.o: %.cpp Lista.h
+# Arquivos-fonte
+SRCS = main.cpp Lista.cpp
+
+# Arquivos objeto
+OBJS = $(SRCS:.cpp=.o)
+
+# Regra principal: compilar o executável
+$(EXEC): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(EXEC) $(OBJS)
+
+# Compilar arquivos .cpp em .o
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-clean:
-	rm -f $(OBJ) $(EXEC)
-
+# Regra para rodar o programa
 run: $(EXEC)
 	./$(EXEC)
+
+# Limpeza dos arquivos compilados
+clean:
+	rm -f $(OBJS) $(EXEC)

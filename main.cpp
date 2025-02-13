@@ -4,114 +4,139 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
+int main()
 {
+
     Lista lista;
-    std::string arquivo = "lista.txt";
+    bool escolha = false;
 
-    lista.carregarLista(arquivo);
-
-    if (argc < 2)
+    do
     {
-        cout << "Uso: ./programa <operacao> [parametros]\n";
-        return 1;
-    }
 
-    string operacao = argv[1];
-    cout << "argv: " << argv[1] << endl;
+        cout << "Escolha as seguintes operações: " << endl;
+        cout << "1- Criar lista" << endl;
+        cout << "2- Inserir elemento na lista" << endl;
+        cout << "3- Remover elemento da lista" << endl;
+        cout << "4- Modificar elemento da lista" << endl;
+        cout << "5- Obter elemento da lista" << endl;
+        cout << "6- Obter tamanho da lista" << endl;
+        cout << "7- Verificar se a lista está vazia" << endl;
+        cout << "8- Verificar se a lista está cheia" << endl;
+        cout << "9- Imprimir lista" << endl;
 
-    if (operacao == "criar")
-    {
-        cout << "Lista criada com sucesso.\n";
-    }
-    else if (operacao == "inserir")
-    {
-        if (argc < 4)
+        int operacao;
+
+        cin >> operacao;
+
+        if (operacao == 1)
         {
-            cout << "Uso: ./programa inserir <valor> <posicao>\n";
+            cout << "Lista criada com sucesso" << endl;
         }
-        int valor = atoi(argv[2]);
-        int pos = atoi(argv[3]);
-
-        if (lista.inserirElemento(pos, valor))
+        else if (operacao == 2)
         {
-            cout << "Elemento " << valor << " inserido na posição " << pos << ".\n";
+            cout << "Insira o valor que deseja inserir:" << endl;
+            int valor;
+            cin >> valor;
+            cout << "Insira a posição em que deseja inserir o valor:" << endl;
+            int pos;
+            cin >> pos;
+
+            if (lista.inserirElemento(pos, valor))
+            {
+                cout << "Elemento " << valor << " inserido na posição " << pos << ".\n";
+                lista.imprimirLista();
+            }
+            else
+            {
+                cout << "Falha ao inserir elemento.\n";
+            }
+        }
+        else if (operacao == 3)
+        {
+
+            cout << "Insira a posição que deseja remover: " << endl;
+            int pos;
+            cin >> pos;
+
+            if (lista.removerElemento(pos))
+            {
+                cout << "Elemento na posição " << pos << " removido.\n";
+                lista.imprimirLista();
+            }
+            else
+            {
+                cout << "Falha ao remover elemento.\n";
+            }
+        }
+        else if (operacao == 4)
+        {
+            cout << "Insira o novo valor que deseja inserir:" << endl;
+            int novo_valor;
+            cin >> novo_valor;
+            cout << "Insira a posição em que deseja inserir o valor:" << endl;
+            int pos;
+            cin >> pos;
+
+            if (lista.modificarElemento(pos, novo_valor))
+            {
+                cout << "Elemento na posição " << pos << " modificado para " << novo_valor << ".\n";
+                lista.imprimirLista();
+            }
+            else
+            {
+                cout << "Falha ao modificar elemento.\n";
+            }
+        }
+        else if (operacao == 5)
+        {
+
+            cout << "Insira a posição da qual deseja obter o valor:" << endl;
+            int pos;
+            cin >> pos;
+            int valor = lista.obterElemento(pos);
+            cout << "Elemento na posição " << pos << ": " << valor << "\n";
+        }
+        else if (operacao == 6)
+        {
+            int n = lista.obterTamanho();
+
+            cout << "Tamanho: " << n << "\n";
+        }
+        else if (operacao == 7)
+        {
+            if (lista.listaVazia())
+            {
+                cout << "Lista Vazia" << endl;
+            }
+            else
+            {
+                cout << "Lista não está vazia" << endl;
+            }
+        }
+        else if (operacao == 8)
+        {
+            if (lista.listaCheia())
+            {
+                cout << "Lista Cheia" << endl;
+            }
+            else
+            {
+                cout << "Lista não está cheia" << endl;
+            }
+        }
+        else if (operacao == 9)
+        {
+            lista.imprimirLista();
         }
         else
         {
-            cout << "Falha ao inserir elemento.\n";
-        }
-    }
-    else if (operacao == "remover")
-    {
-        if (argc < 3)
-        {
-            cout << "Uso: ./programa remover <posicao>\n";
-            return 1;
-        }
-        int pos = atoi(argv[2]);
-
-        if (lista.removerElemento(pos))
-        {
-            cout << "Elemento na posição " << pos << " removido.\n";
-        }
-        else
-        {
-            cout << "Falha ao remover elemento.\n";
-        }
-    }
-    else if (operacao == "modificar")
-    {
-        if (argc < 4)
-        {
-            cout << "Uso: ./programa modificar <posicao> <novo_valor>\n";
-            return 1;
-        }
-        int pos = atoi(argv[2]);
-        int novo_valor = atoi(argv[3]);
-
-        if (lista.modificarElemento(pos, novo_valor))
-        {
-            cout << "Elemento na posição " << pos << " modificado para " << novo_valor << ".\n";
-        }
-        else
-        {
-            cout << "Falha ao modificar elemento.\n";
-        }
-    }
-    else if (operacao == "obter")
-    {
-        if (argc < 3)
-        {
-            cout << "Uso: ./programa obter <posicao>\n";
-            return 1;
-        }
-        int pos = atoi(argv[2]);
-        int valor = lista.obterElemento(pos);
-        cout << "Elemento na posição " << pos << ": " << valor << "\n";
-    }
-    else if (operacao == "tamanho")
-    {
-        if (argc < 2)
-        {
-            cout << "Uso: ./programa tamanho\n";
-            return 1;
+            cout << "Operação desconhecida.\n";
         }
 
-        int n = lista.obterTamanho();
+        cout << "Deseja continuar? 1-Sim, 0-Não" << endl;
+        cin >> escolha;
 
-        cout << "Tamanho: " << n << "\n";
-    }
-    else if (operacao == "imprimir")
-    {
-        lista.imprimirLista();
-    }
-    else
-    {
-        cout << "Operação desconhecida.\n";
-    }
-
-    lista.salvarLista(arquivo);
+    } while (escolha);
 
     return 0;
 }
